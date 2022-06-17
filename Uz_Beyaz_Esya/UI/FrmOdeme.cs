@@ -26,18 +26,13 @@ namespace Uz_Beyaz_Esya.UI
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-        }
-
-        private void FrmOdeme_Load(object sender, EventArgs e)
-        {
             if (nmTutar.Value == 0)
             {
                 errorProvider1.SetError(nmTutar, "Tutar boş geçilemez");
                 nmTutar.Focus();
                 return;
             }
-            else 
+            else
             {
                 errorProvider1.SetError(nmTutar, "");
             }
@@ -51,7 +46,7 @@ namespace Uz_Beyaz_Esya.UI
             {
                 errorProvider1.SetError(cbtur, "");
             }
-            if (txtAcıklama.Text == "") 
+            if (txtAcıklama.Text == "")
             {
                 errorProvider1.SetError(txtAcıklama, "Açıklama boş geçilemez.");
                 cbtur.Focus();
@@ -65,9 +60,55 @@ namespace Uz_Beyaz_Esya.UI
             Odeme.Tur = cbtur.SelectedItem.ToString();
             Odeme.Tarih = dtpTarih.Value;
             Odeme.Tutar = (double)nmTutar.Value;
-            Odeme.Aciklama= txtAcıklama.Text;
+            Odeme.Aciklama = txtAcıklama.Text; if (nmTutar.Value == 0)
+            {
+                errorProvider1.SetError(nmTutar, "Tutar boş geçilemez");
+                nmTutar.Focus();
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(nmTutar, "");
+            }
+            if (cbtur.SelectedItem == null)
+            {
+                errorProvider1.SetError(cbtur, "Tür boş geçilemez.");
+                cbtur.Focus();
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(cbtur, "");
+            }
+            if (txtAcıklama.Text == "")
+            {
+                errorProvider1.SetError(txtAcıklama, "Açıklama boş geçilemez.");
+                cbtur.Focus();
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(txtAcıklama, "");
+            }
+            Odeme.MusteriID = Guid.Parse(txtMusteri.Text);
+            Odeme.Tur = cbtur.SelectedItem.ToString();
+            Odeme.Tarih = dtpTarih.Value;
+            Odeme.Tutar = (double)nmTutar.Value;
+            Odeme.Aciklama = txtAcıklama.Text;
 
             DialogResult = DialogResult.OK;
+        }
+
+        private void FrmOdeme_Load(object sender, EventArgs e)
+        {
+            txtID.Text = Odeme.ID.ToString();
+            if (Güncelleme)
+            {
+                txtMusteri.Text = Odeme.MusteriID.ToString();
+                nmTutar.Value = (decimal)Odeme.Tutar;
+                dtpTarih.Value = Odeme.Tarih;
+                txtAcıklama.Text = Odeme.Aciklama.ToString();
+            }
         }
         private void BtnMusteri_Click(object sender, EventArgs e)
         {
